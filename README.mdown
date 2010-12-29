@@ -7,7 +7,7 @@ Jerkbot allows you to provide a set of canned responses, and combine them with a
 - Sending packets really slow.
 - Only sending half the response.
 - Holding connections open forever and never replying.
-- Sending incorrect headers or responding as SMTP to an HTTP request.
+- Sending garbage headers.
 - Piping the contents of /dev/urandom instead of useful content.
 - Sending no response at all, just simply refusing connections.
 

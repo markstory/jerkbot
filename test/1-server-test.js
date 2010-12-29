@@ -1,11 +1,10 @@
-var deps = require('../deps.js');
-var jerk = require('../lib/jerkbot.js');
+var vows = require('vows'),
+	assert = require('assert'),
+	jerk = require('../lib/jerkbot.js'),
+	http = require('http');
 
-var vows = deps.vows;
-var assert = deps.assert;
-
-vows.describe('Server creation').addBatch({
-	'Server should exist and be http.Server': function () {
-		assert.ok(jerk.server instanceof deps.http.Server)
+vows.describe('jerkbot server').addBatch({
+	'Server should exist and be http.Server': function (topic) {
+		assert.ok(jerk.server instanceof http.Server)
 	}
 }).export(module)

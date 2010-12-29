@@ -9,11 +9,11 @@
   "author": "Mark Story <mark@mark-story.net> (http://mark-story.com)",
   "contributors": [],
   "dependencies": {
-    "vows": ">=0.1.6"
+    "vows": ">=0.5.2"
   },
   "main": "./lib/jerkbot",
   "bin": {
-    "vows": "./bin/vows"
+    "jerkbot": "./bin/jerkbot"
   },
   "directories": {
     "test": "./test",
