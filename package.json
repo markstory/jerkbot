@@ -1,0 +1,28 @@
+{
+  "name": "jerkbot",
+  "description": "Integration testing server for testing what happens when your integration points become evil.",
+  "keywords": [
+    "testing",
+    "integration",
+    "test"
+  ],
+  "author": "Mark Story <mark@mark-story.net> (http://mark-story.com)",
+  "contributors": [],
+  "dependencies": {
+    "vows": ">=0.1.6"
+  },
+  "main": "./lib/jerkbot",
+  "bin": {
+    "vows": "./bin/vows"
+  },
+  "directories": {
+    "test": "./test",
+    "lib": "lib"
+  },
+  "version": "0.0.1",
+  "engines": {
+    "node": "0.2.5"
+  },
+  "homepage": "http://github.com/markstory/jerkbot",
+  "repository": "http://github.com/markstory/jerkbot.git"
+}
