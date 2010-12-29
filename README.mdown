@@ -1,0 +1,23 @@
+# JerkBot
+
+Jerkbot is intended as an integration testing server application.  As web application architectures become increasingly dependant on remote systems, its good to be prepared for when one of these services goes rogue and becomes a jerk. Jerkbot is intended as a tool to help you test what would happen if your integrating services started being total jerks.
+
+Jerkbot allows you to provide a set of canned responses, and choose from a variety of jerky behaviors servers can take.
+
+- Sending packets really slow.
+- Only sending half the response.
+- Holding connections open forever and never replying.
+- Sending incorrect headers or responding as SMTP to an HTTP request.
+- Piping the contents of /dev/urandom instead of useful content.
+- Sending no response at all, just simply refusing connections.
+
+The possibilities for integration points that are jerks is endless.
+
+## Making canned responses
+
+## Configuring Jerkbot
+
+
+## Issues
+
+Is jerkbot being extra jerky? Open a [ticket on github](http://github.com/markstory/jerkbot/issues)
