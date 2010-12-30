@@ -3,54 +3,65 @@ var vows = require('vows'),
 	path = require('path'),
 	http = require('http'),
 	mocks = require('./mocks.mock'),
-	jerk = require('../lib/jerkbot.js');
+	server = require('../lib/server');
 
 
-vows.describe('jerkbot').addBatch({
+vows.describe('jerkbot Server').addBatch({
 	'server': {
 		'should have a createServer function': function () {
-			assert.isFunction(jerk.createServer)
+			assert.isFunction(server.Server)
 		},
 
 		'createServer should make an http.Server': function () {
-			assert.ok(jerk.createServer({}) instanceof http.Server);
+			var serve = new server.Server(path.join(__dirname, 'config', 'empty_config.js'));
+			assert.ok(serve instanceof http.Server);
 		}
 	},
 
 	'loadConfig with empty config file': {
 		topic: function () {
-			return path.join(__dirname, 'config', 'empty_config.js');
+			var file = path.join(__dirname, 'config', 'empty_config.js');
+			return new server.Server(file);
 		},
 
-		'should set port to 8080 when empty': function (topic ) {
-			var config = jerk.loadConfig(topic);
-
-			assert.equal(8080, config.port);
+		'should set port to 8080 when empty': function (topic) {
+			assert.equal(8080, topic.config.port);
 		},
 
 		'should leave host undefined': function (topic) {
-			var config = jerk.loadConfig(topic);
-
-			assert.equal(undefined, config.host);
+			assert.isUndefined(topic.config.host);
 		},
 		
 		'should set dirname up': function (topic) {
-			var config = jerk.loadConfig(topic);
-			assert.equal(path.join(__dirname, 'config'), config.dirname);
+			assert.equal(path.join(__dirname, 'config'), topic.config.dirname);
+		},
+	},
+	
+	'loadConfig merges options': {
+		topic: function () {
+			var file = path.join(__dirname, 'config', 'empty_config.js');
+			return new server.Server(file, {verbose: true});
 		},
 		
-		'should merge optional options': function (topic) {
-			var config = jerk.loadConfig(topic, {verbose: true});
-
-			assert.ok(config.verbose);
+		'with optional options': function (topic) {
+			assert.ok(topic.config.verbose);
 		}
 	},
 	
 	'error()': {
 		topic: function () {
-			return jerk.error;
+			this._error = console.error;
+			return server.error;
 		},
+		
+		tearDown: function () {
+			console.error = this._error;
+		},
+	
 		'calls response methods correctly.': function (topic) {
+			console.error = function (msg) {
+				assert.equal()
+			}
 			var response = Object.create(mocks.httpResponse);
 			response.end = function () { assert.ok(true); }
 			
