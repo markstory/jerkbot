@@ -1,1 +1,21 @@
 #!/usr/bin/env node
+
+var optparse = require('optparse'),
+	sys = require('sys'),
+	path = require('path');
+
+var switches = [
+	['-h', '--help', 'Show the help'],
+	['-c', '--config', 'Choose a config file to run jerkbot with.']
+];
+
+// Setup the option parser.
+var parser = new optparse.OptionParser(switches);
+parser.banner = 'jerkbot [options] [arguments]';
+
+parser.on('help', function () {
+	sys.puts(parser);
+	process.exit(0);
+});
+
+var args = parser.parse(process.argv.slice(2));

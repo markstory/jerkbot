@@ -1,6 +1,5 @@
 var vows = require('vows'),
 	assert = require('assert'),
-	eyes = require('eyes'),
 	nice = require('../lib/attitude/nice'),
 	http = require('http');
 

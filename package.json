@@ -9,7 +9,8 @@
   "author": "Mark Story <mark@mark-story.net> (http://mark-story.com)",
   "contributors": [],
   "dependencies": {
-    "vows": ">=0.5.2"
+    "vows": ">=0.5.2",
+    "optparse": ">=1.0.0"
   },
   "main": "./lib/jerkbot",
   "bin": {
