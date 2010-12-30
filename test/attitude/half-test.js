@@ -11,6 +11,9 @@ var mockResponse = {
 	writeHead: function (code, headers) {
 		this.code = code;
 		this.headers = headers;
+	},
+	end: function () {
+		
 	}
 };
 
@@ -36,7 +39,7 @@ vows.describe('Half length attitude').addBatch({
 			var headers = {'Content-Type': 'text/html'};
 
 			topic.setResponse('test');
-			topic.setHead(300, headers);
+			topic.config({code: 300, headers: headers});
 	
 			var httpResponse = Object.create(mockResponse);
 

@@ -11,6 +11,9 @@ var mockResponse = {
 	writeHead: function (code, headers) {
 		this.code = code;
 		this.headers = headers;
+	},
+	end: function () {
+		
 	}
 };
 
@@ -28,12 +31,21 @@ vows.describe('Nice attitude').addBatch({
 			var headers = {'Content-Type': 'text/html'};
 
 			topic.setResponse('<tag>stuff</tag>');
-			topic.setHead(200, headers);
+			topic.config({code: 200, headers: headers});
 
 			var httpResponse = Object.create(mockResponse);
 
 			assert.ok(topic.run(httpResponse));
 			assert.equal(httpResponse.content, '<tag>stuff</tag>');
+		},
+		
+		'calls end()': function (topic) {
+			var httpResponse = Object.create(mockResponse);
+			httpResponse.end = function () {
+				assert.ok(true);
+			}
+
+			topic.setResponse('woo');
 		}
 	},
 	
@@ -47,7 +59,7 @@ vows.describe('Nice attitude').addBatch({
 		},
 
 		'with undefined code': function (topic) {
-			topic.setHead(undefined, undefined);
+			topic.config({code: undefined, headers: undefined});
 			assert.equal(200, topic._code);
 			assert.deepEqual({}, topic._headers)
 		}
