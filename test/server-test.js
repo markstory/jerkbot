@@ -44,8 +44,14 @@ vows.describe('jerkbot').addBatch({
 		topic: function () {
 			return jerk.error;
 		},
-		'calls response methods correctly.': function () {
+		'calls response methods correctly.': function (topic) {
+			var response = Object.create(mocks.httpResponse);
+			response.end = function () { assert.ok(true); }
 			
+			topic(response, 'Broken');
+			
+			assert.equal(500, response.code);
+			assert.equal('Broken', response.content);
 		}
 	}
 }).export(module)
