@@ -18,4 +18,16 @@ parser.on('help', function () {
 	process.exit(0);
 });
 
+
+var configFile = path.join(process.cwd(), 'jerk.js')
+parser.on('config', function (value) {
+	configFile = value;
+});
+
 var args = parser.parse(process.argv.slice(2));
+
+require.paths.unshift(path.join(__dirname, '..', 'lib'));
+
+var configuration = require(configFile);
+
+var jerkbot = require('jerkbot');

@@ -26,8 +26,18 @@ The `jerk.json` is a configuration file that lets you wire up responses to incom
 
 ## Configuring Jerkbot
 
-Configuring jerkbot is done using a JSON file.  This json file describes which urls map to which responses, and what kind of attitude should be used for those request url's.
+Configuring jerkbot is done using a JSON file.  This json file describes which urls map to which responses, and what kind of attitude should be used for those request url's.  A sample configuration file would look like:
 
+	module.exports = {
+		port: 8080
+		responses: [
+			{
+				url: '/posts/index.json',
+				attitude: 'half',
+				response: './canned/posts.json'
+			}
+		]
+	};
 
 
 

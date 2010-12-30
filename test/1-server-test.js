@@ -4,7 +4,11 @@ var vows = require('vows'),
 	http = require('http');
 
 vows.describe('jerkbot server').addBatch({
-	'Server should exist and be http.Server': function (topic) {
-		assert.ok(jerk.server instanceof http.Server)
+	'should have a createServer function': function () {
+		assert.isFunction(jerk.createServer)
+	},
+
+	'createServer should make an http.Server': function () {
+		assert.ok(jerk.createServer({}) instanceof http.Server);
 	}
 }).export(module)
