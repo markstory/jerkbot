@@ -7,6 +7,11 @@ var vows = require('vows'),
 var mockResponse = {
 	write: function (content) {
 		this.content = content
+	},
+
+	writeHead: function (code, headers) {
+		this.code = code;
+		this.headers = headers;
 	}
 };
 
@@ -15,6 +20,7 @@ vows.describe('Half length attitude').addBatch({
 		topic: function () {
 			return Object.create(half);
 		},
+
 		'Takes a canned response value': function (topic) {
 			assert.ok(topic.setResponse('This is a string value'));
 		},
@@ -25,6 +31,19 @@ vows.describe('Half length attitude').addBatch({
 			var httpResponse = Object.create(mockResponse);
 			assert.ok(topic.run(httpResponse));
 			assert.equal(httpResponse.content, 'This ');
+		},
+		
+		'Sets headers correctly': function (topic) {
+			var headers = {'Content-Type': 'text/html'};
+
+			topic.setResponse('test');
+			topic.setHead(300, headers);
+	
+			var httpResponse = Object.create(mockResponse);
+
+			assert.ok(topic.run(httpResponse));
+			assert.equal(300, httpResponse.code);
+			assert.deepEqual(headers, httpResponse.headers);
 		}
 	}
 }).export(module)
