@@ -1,21 +1,10 @@
 var vows = require('vows'),
 	assert = require('assert'),
 	half = require('../../lib/attitude/half'),
-	http = require('http');
+	
+	mocks = require('../mocks.mock');
 
-var mockResponse = {
-	write: function (content) {
-		this.content = content
-	},
 
-	writeHead: function (code, headers) {
-		this.code = code;
-		this.headers = headers;
-	},
-	end: function () {
-		
-	}
-};
 
 vows.describe('Half length attitude').addBatch({
 	'working with canned responses': {
@@ -30,7 +19,7 @@ vows.describe('Half length attitude').addBatch({
 		'Returns half the response on run()': function (topic) {
 			topic.setResponse('This this ');
 
-			var httpResponse = Object.create(mockResponse);
+			var httpResponse = Object.create(mocks.httpResponse);
 			assert.ok(topic.run(httpResponse));
 			assert.equal(httpResponse.content, 'This ');
 		},
@@ -41,7 +30,7 @@ vows.describe('Half length attitude').addBatch({
 			topic.setResponse('test');
 			topic.config({code: 300, headers: headers});
 	
-			var httpResponse = Object.create(mockResponse);
+			var httpResponse = Object.create(mocks.httpResponse);
 
 			assert.ok(topic.run(httpResponse));
 			assert.equal(300, httpResponse.code);

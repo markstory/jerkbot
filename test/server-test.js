@@ -2,7 +2,7 @@ var vows = require('vows'),
 	assert = require('assert'),
 	path = require('path'),
 	http = require('http'),
-
+	mocks = require('./mocks.mock'),
 	jerk = require('../lib/jerkbot.js');
 
 
@@ -37,6 +37,15 @@ vows.describe('jerkbot').addBatch({
 		'should set dirname up': function (topic) {
 			var config = jerk.loadConfig(topic);
 			assert.equal(path.join(__dirname, 'config'), config.dirname);
+		}
+	},
+	
+	'error()': {
+		topic: function () {
+			return jerk.error;
+		},
+		'calls response methods correctly.': function () {
+			
 		}
 	}
 }).export(module)

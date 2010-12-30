@@ -1,24 +1,7 @@
 var vows = require('vows'),
 	assert = require('assert'),
 	slow = require('../../lib/attitude/slow'),
-	http = require('http');
-
-var mockResponse = {
-	content: '',
-
-	write: function (content) {
-		this.content += content
-	},
-
-	writeHead: function (code, headers) {
-		this.code = code;
-		this.headers = headers;
-	},
-
-	end: function () {
-		
-	}
-};
+	mocks = require('../mocks.mock');
 
 vows.describe('Slow attitude').addBatch({
 	'working with canned responses': {
@@ -27,7 +10,7 @@ vows.describe('Slow attitude').addBatch({
 			slowmo.config({interval: 5, headers: {test: 'value'}});
 			slowmo.setResponse('This is a response');
 
-			var httpResponse = Object.create(mockResponse);
+			var httpResponse = Object.create(mocks.httpResponse);
 			httpResponse.end = this.callback;
 
 			slowmo.run(httpResponse);

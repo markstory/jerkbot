@@ -1,0 +1,19 @@
+/**
+ * Mocks for testing.
+ *
+ */
+exports.httpResponse = {
+	content: '',
+	
+	write: function (content) {
+		this.content += content
+	},
+
+	writeHead: function (code, headers) {
+		this.code = code;
+		this.headers = headers;
+	},
+	end: function () {
+
+	}
+};
