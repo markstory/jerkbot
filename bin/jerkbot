@@ -33,16 +33,7 @@ parser.on('verbose', function (value) {
 var args = parser.parse(process.argv.slice(2));
 
 require.paths.unshift(path.join(__dirname, '..', 'lib'));
-/*var jerkbot = require('jerkbot');
 
-// Get the config file and start the server.
-var configuration = jerkbot.loadConfig(options.config, options);
-var server = jerkbot.createServer(configuration);
-
-server.listen(configuration.port, configuration.host, function () {
-	jerkbot.log('Jerkbot started',  'listening on ' + configuration.host + ':' + configuration.port);
-});
-*/
 var server = require('server');
 
 var jerk = new server.Server(options.config, options);
