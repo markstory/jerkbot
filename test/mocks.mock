@@ -17,3 +17,7 @@ exports.httpResponse = {
 
 	}
 };
+
+exports.httpRequest = {
+	url: ''
+};

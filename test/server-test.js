@@ -5,6 +5,8 @@ var vows = require('vows'),
 	mocks = require('./mocks.mock'),
 	server = require('../lib/server');
 
+// Add paths so attitudes can be found.
+require.paths.unshift(path.join(__dirname, '..', 'lib'));
 
 vows.describe('jerkbot Server').addBatch({
 	'server': {
@@ -13,14 +15,14 @@ vows.describe('jerkbot Server').addBatch({
 		},
 
 		'createServer should make an http.Server': function () {
-			var serve = new server.Server(path.join(__dirname, 'config', 'empty_config.js'));
+			var serve = new server.Server(path.join(__dirname, 'config', 'empty_config.conf'));
 			assert.ok(serve instanceof http.Server);
 		}
 	},
 
 	'loadConfig with empty config file': {
 		topic: function () {
-			var file = path.join(__dirname, 'config', 'empty_config.js');
+			var file = path.join(__dirname, 'config', 'empty_config.conf');
 			return new server.Server(file);
 		},
 
@@ -39,7 +41,7 @@ vows.describe('jerkbot Server').addBatch({
 	
 	'loadConfig merges options': {
 		topic: function () {
-			var file = path.join(__dirname, 'config', 'empty_config.js');
+			var file = path.join(__dirname, 'config', 'empty_config.conf');
 			return new server.Server(file, {verbose: true});
 		},
 		
@@ -54,7 +56,7 @@ vows.describe('jerkbot Server').addBatch({
 			return server.error;
 		},
 		
-		tearDown: function () {
+		teardown: function () {
 			console.error = this._error;
 		},
 	
@@ -69,6 +71,52 @@ vows.describe('jerkbot Server').addBatch({
 			
 			assert.equal(500, response.code);
 			assert.equal('Broken', response.content);
+		}
+	}
+}).addBatch({
+	'Server.handle()': {
+		topic: function () {
+			this._error = console.error;
+
+			var file = path.join(__dirname, 'config', 'simple_config.conf');
+			return new server.Server(file);
+		},
+
+		teardown: function () {
+			console.error = this._error;
+		},
+
+		'fails when attitude is missing': function (topic) {
+			var res = Object.create(mocks.httpResponse);
+			var req = Object.create(mocks.httpRequest, {url : {value: '/missing/attitude'}});
+
+			console.error = function (message) {
+				assert.match(message, /Missing attitude/);
+			}
+
+			topic.handle(req, res);
+		},
+
+		'fails when response file is missing': function (topic) {
+			var res = Object.create(mocks.httpResponse);
+			var req = Object.create(mocks.httpRequest, {url : {value: '/missing/response'}});
+
+			console.error = function (message) {
+				assert.match(message, /Could not read file/);
+			}
+
+			topic.handle(req, res);
+		},
+
+		'fails when no responder can be found': function (topic) {
+			var res = Object.create(mocks.httpResponse);
+			var req = Object.create(mocks.httpRequest, {url : {value: '/no/path'}});
+
+			console.error = function (message) {
+				assert.match(message, /No responder found/);
+			}
+
+			topic.handle(req, res);
 		}
 	}
 }).export(module)
