@@ -35,6 +35,22 @@ vows.describe('Nice attitude').addBatch({
 			assert.ok(topic.run(httpResponse));
 			assert.equal(httpResponse.content, '<tag>stuff</tag>');
 		}
+	},
+	
+	'setHead works well': {
+		topic: function () {
+			return Object.create(nice);
+		},
+
+		'default code is 200': function (topic) {
+			assert.equal(200, topic._code);
+		},
+
+		'with undefined code': function (topic) {
+			topic.setHead(undefined, undefined);
+			assert.equal(200, topic._code);
+			assert.deepEqual({}, topic._headers)
+		}
 	}
 }).export(module)
 
