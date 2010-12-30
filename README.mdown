@@ -39,11 +39,20 @@ Configuring jerkbot is done using a JSON file.  This json file describes which u
 		]
 	};
 
-
+You can define one attitude per request path, you want to handle with jerkbot.  For each url that will respond, should create a canned response.  This response file should contain the response the integrating system would normally expect.  The chosen attitude, can either augment or replace this content depending on the attitude.
 
 ## Making canned responses
 
+Canned responses are just plain text files, that can contain any content your system would normally get. The `response` value for any responder, should contain a path relative to the config file, that leads to the canned response.
+
+## Running jerkbot
+
+You start and stop jerkbot from the command line using the `jerkbot` executable.  There are a few options you can use with jerkbot:
+
+- `config` specify the absolute path to the config file you want used.  Defaults `./jerk.js`.
+- `verbose` Turn on verbose output.
+- `help` Display the help.
 
 ## Issues
 
-Is jerkbot being extra jerky? Open a [ticket on github](http://github.com/markstory/jerkbot/issues)
+Is jerkbot being a jerk? Open a [ticket on github](http://github.com/markstory/jerkbot/issues)
