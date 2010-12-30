@@ -37,6 +37,12 @@ vows.describe('jerkbot').addBatch({
 		'should set dirname up': function (topic) {
 			var config = jerk.loadConfig(topic);
 			assert.equal(path.join(__dirname, 'config'), config.dirname);
+		},
+		
+		'should merge optional options': function (topic) {
+			var config = jerk.loadConfig(topic, {verbose: true});
+
+			assert.ok(config.verbose);
 		}
 	},
 	

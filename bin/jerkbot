@@ -10,6 +10,11 @@ var switches = [
 	['-v', '--verbose', 'Turn on verbose output.']
 ];
 
+var options = {
+	verbose: false,
+	config: path.join(process.cwd(), 'jerk.js')
+};
+
 // Setup the option parser.
 var parser = new optparse.OptionParser(switches);
 parser.banner = 'jerkbot [options] [arguments]';
@@ -18,11 +23,11 @@ parser.on('help', function () {
 	sys.puts(parser);
 	process.exit(0);
 });
-
-
-var configFile = path.join(process.cwd(), 'jerk.js')
 parser.on('config', function (value) {
-	configFile = value;
+	options.config = value;
+});
+parser.on('verbose', function (value) {
+	options.verbose = true;
 });
 
 var args = parser.parse(process.argv.slice(2));
@@ -31,7 +36,7 @@ require.paths.unshift(path.join(__dirname, '..', 'lib'));
 var jerkbot = require('jerkbot');
 
 // Get the config file and start the server.
-var configuration = jerkbot.loadConfig(configFile);
+var configuration = jerkbot.loadConfig(options.config, options);
 var server = jerkbot.createServer(configuration);
 
 server.listen(configuration.port, configuration.host, function () {
