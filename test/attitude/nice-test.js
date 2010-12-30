@@ -46,6 +46,7 @@ vows.describe('Nice attitude').addBatch({
 			}
 
 			topic.setResponse('woo');
+			topic.run(httpResponse);
 		}
 	},
 	

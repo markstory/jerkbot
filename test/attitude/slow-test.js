@@ -4,14 +4,17 @@ var vows = require('vows'),
 	http = require('http');
 
 var mockResponse = {
+	content: '',
+
 	write: function (content) {
-		this.content = content
+		this.content += content
 	},
 
 	writeHead: function (code, headers) {
 		this.code = code;
 		this.headers = headers;
 	},
+
 	end: function () {
 		
 	}
@@ -20,21 +23,21 @@ var mockResponse = {
 vows.describe('Slow attitude').addBatch({
 	'working with canned responses': {
 		topic: function () {
-			return new(slow);
-		},
+			var slowmo = new(slow);
+			slowmo.config({interval: 5, headers: {test: 'value'}});
+			slowmo.setResponse('This is a response');
 
-		'Takes a canned response value': function (topic) {
-			assert.ok(topic.setResponse('This is a string value'));
-		},
-
-		'calls end()': function (topic) {
 			var httpResponse = Object.create(mockResponse);
-			httpResponse.end = function () {
-				assert.ok(true);
-			}
+			httpResponse.end = this.callback;
 
-			topic.setResponse('woo');
-		}
+			slowmo.run(httpResponse);
+			this.response = httpResponse;
+		},
+
+		'all content gets sent': function (err, result) {
+			assert.deepEqual(this.response.headers, {test: 'value'});
+			assert.equal(this.response.content, 'This is a response');
+		},
 	},
 	
 	'config works well': {

@@ -16,6 +16,7 @@ vows.describe('jerkbot').addBatch({
 			assert.ok(jerk.createServer({}) instanceof http.Server);
 		}
 	},
+
 	'loadConfig with empty config file': {
 		topic: function () {
 			return path.join(__dirname, 'config', 'empty_config.js');
