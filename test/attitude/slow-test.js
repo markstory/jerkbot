@@ -1,6 +1,6 @@
 var vows = require('vows'),
 	assert = require('assert'),
-	nice = require('../../lib/attitude/nice'),
+	slow = require('../../lib/attitude/slow'),
 	http = require('http');
 
 var mockResponse = {
@@ -17,28 +17,16 @@ var mockResponse = {
 	}
 };
 
-vows.describe('Nice attitude').addBatch({
+vows.describe('Slow attitude').addBatch({
 	'working with canned responses': {
 		topic: function () {
-			return new(nice);
+			return new(slow);
 		},
 
 		'Takes a canned response value': function (topic) {
 			assert.ok(topic.setResponse('This is a string value'));
 		},
-	
-		'does not muck around with them': function (topic) {
-			var headers = {'Content-Type': 'text/html'};
 
-			topic.setResponse('<tag>stuff</tag>');
-			topic.config({code: 200, headers: headers});
-
-			var httpResponse = Object.create(mockResponse);
-
-			assert.ok(topic.run(httpResponse));
-			assert.equal(httpResponse.content, '<tag>stuff</tag>');
-		},
-		
 		'calls end()': function (topic) {
 			var httpResponse = Object.create(mockResponse);
 			httpResponse.end = function () {
@@ -51,17 +39,28 @@ vows.describe('Nice attitude').addBatch({
 	
 	'config works well': {
 		topic: function () {
-			return new(nice);
+			return new(slow);
 		},
 
 		'default code is 200': function (topic) {
 			assert.equal(200, topic._code);
+		},
+		
+		'default interval, and bytes': function (topic) {
+			assert.equal(1, topic._bytes);
+			assert.equal(1000, topic._interval)
 		},
 
 		'with undefined code': function (topic) {
 			topic.config({code: undefined, headers: undefined});
 			assert.equal(200, topic._code);
 			assert.deepEqual({}, topic._headers)
+		},
+
+		'override bytes and interval': function (topic) {
+			topic.config({interval: 1, bytes: 10});
+			assert.equal(10, topic._bytes);
+			assert.deepEqual(1, topic._interval);
 		}
 	}
 }).export(module)

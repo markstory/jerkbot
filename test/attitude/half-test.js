@@ -20,7 +20,7 @@ var mockResponse = {
 vows.describe('Half length attitude').addBatch({
 	'working with canned responses': {
 		topic: function () {
-			return Object.create(half);
+			return new(half);
 		},
 
 		'Takes a canned response value': function (topic) {
