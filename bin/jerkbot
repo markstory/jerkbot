@@ -6,7 +6,8 @@ var optparse = require('optparse'),
 
 var switches = [
 	['-h', '--help', 'Show the help'],
-	['-c', '--config', 'Choose a config file to run jerkbot with.']
+	['-c', '--config', 'Choose a config file to run jerkbot with.'],
+	['-v', '--verbose', 'Turn on verbose output.']
 ];
 
 // Setup the option parser.

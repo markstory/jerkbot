@@ -31,6 +31,11 @@ vows.describe('jerkbot').addBatch({
 			var config = jerk.loadConfig(topic);
 
 			assert.equal(undefined, config.host);
+		},
+		
+		'should set dirname up': function (topic) {
+			var config = jerk.loadConfig(topic);
+			assert.equal(path.join(__dirname, 'config'), config.dirname);
 		}
 	}
 }).export(module)
