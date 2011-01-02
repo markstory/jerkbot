@@ -4,6 +4,7 @@
  */
 exports.httpResponse = {
 	content: '',
+	headers: {},
 	
 	write: function (content) {
 		this.content += content
