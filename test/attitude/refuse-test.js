@@ -10,7 +10,9 @@ vows.describe('Refuse attitude').addBatch({
 			refuser.setResponse('This is a response');
 
 			var httpResponse = Object.create(mocks.httpResponse);
-			httpResponse.end = this.callback;
+			httpResponse.connection = {
+				destroy: this.callback
+			};
 
 			refuser.run(httpResponse);
 			this.response = httpResponse;
