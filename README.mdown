@@ -9,7 +9,7 @@ Jerkbot allows you to provide a set of canned responses, and combine them with a
 - Sending the response n-times.
 - Holding connections open and never replying, or delaying replying for a while.
 - Piping the contents of /dev/urandom instead of useful content.
-- Sending no response at all, just simply refusing connections.
+- Sending no response at all, just simply dropping connections.
 
 
 ## Using Jerkbot
