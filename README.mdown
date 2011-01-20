@@ -25,7 +25,7 @@ The `jerk.json` is a configuration file that lets you wire up responses to incom
 
 ## Configuring Jerkbot
 
-Configuring jerkbot is done using a JSON file.  This json file describes which urls map to which responses, and what kind of attitude should be used for those request url's.  A sample configuration file would look like:
+Configuring jerkbot is done using a JSON file.  This JSON file describes which urls map to which responses, and what kind of attitude should be used for those request url's.  A sample configuration file would look like:
 
 	module.exports = {
 		port: 8080
@@ -33,16 +33,16 @@ Configuring jerkbot is done using a JSON file.  This json file describes which u
 			{
 				url: '/posts/index.json',
 				attitude: 'half',
-				response: './canned/posts.json'
+				response: './responses/some-response.xml'
 			}
 		]
 	};
 
-You can define one attitude per request path, you want to handle with jerkbot.  For each url that will respond, should create a canned response.  This response file should contain the response the integrating system would normally expect.  The chosen attitude, can either augment or replace this content depending on the attitude.
+You can define one attitude per request path, you want to handle with jerkbot.  Depending on the type of attitude you use for each path, you'll need to create a canned response. This response file should contain the response the integrating system would normally expect.  If you are using either the `drop` or `random` you don't need to supply a response, as one will be created for you.
 
 ## Making canned responses
 
-Canned responses are just plain text files, that can contain any content your system would normally get. The `response` value for any responder, should contain a path relative to the config file, that leads to the canned response.
+Canned responses are just plain text files, that can contain any content the system you are testing would normally get. The `response` value for any responder, should contain a path relative to the config file, pointing to the canned response.  This file will be read and used as the response when the associated url is visited.
 
 ## Running jerkbot
 
