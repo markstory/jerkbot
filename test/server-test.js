@@ -97,17 +97,6 @@ vows.describe('jerkbot Server').addBatch({
 			topic.handle(req, res);
 		},
 
-		'fails when response file is missing': function (topic) {
-			var res = Object.create(mocks.httpResponse);
-			var req = Object.create(mocks.httpRequest, {url : {value: '/missing/response'}});
-
-			console.error = function (message) {
-				assert.match(message, /Could not read file/);
-			}
-
-			topic.handle(req, res);
-		},
-
 		'fails when no responder can be found': function (topic) {
 			var res = Object.create(mocks.httpResponse);
 			var req = Object.create(mocks.httpRequest, {url : {value: '/no/path'}});
