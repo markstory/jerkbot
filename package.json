@@ -1,6 +1,6 @@
 {
   "name": "jerkbot",
-  "description": "Integration testing server for testing what happens when your integration points become evil.",
+  "description": "Integration testing server for testing what happens when your integration points become evil. Provides a number of behaviors that jerky servers can inflict on you, like dropping response, or only serving half the response.",
   "keywords": [
     "testing",
     "integration",
@@ -22,7 +22,7 @@
   },
   "version": "0.0.1",
   "engines": {
-    "node": "0.2.5"
+    "node": "0.4.0"
   },
   "homepage": "http://github.com/markstory/jerkbot",
   "repository": "http://github.com/markstory/jerkbot.git"
